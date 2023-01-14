@@ -1,0 +1,29 @@
+IFF_TUN =0x0001
+IFF_TAP = 0x0002
+IFF_NO_PI= 0x1000
+
+#Create the tun interface
+
+tun os.open("/dev/net/tun", os.0_RDWR)
+ ifr struct.pack('16sH', b'shebu%d', IFF TUN | IFF_NO_PI) 
+ ifname_bytes = fcntl. ioctl(tun, TUNSETIFF, 1fr)
+
+#Get the interface name
+
+ifname = ifname_bytes.decode('UTF-8')[:16]. ip("\x00")
+print("Interface Name: {}".format(ifname))
+
+os.system("ip addr add 192.168.53.99/24 dev {}".format(ifname)) 
+os.system("ip link set dev {} up".format(ifname)) 
+
+SERVER PORT= 9090
+SERVER_IP= "10.9.0.11" 
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+while True: # Get a packet from the tun interface 
+
+        packet os.read(tun, 2048) 
+        if packet:
+
+                sock.sendto (packet, (SERVER IP, SERVER_PORT))sock.sendto (packet, (SERVER IP, SERVER_PORT))
